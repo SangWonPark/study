@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {mergeRoutes, PageRouteProps} from "./core/route/routes";
+import DefaultRoute from "./core/route/DefaultRoute";
+import {DefaultLayout} from "./core/layout/DefaultLayout";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                {
+                    mergeRoutes.map((_item: PageRouteProps, _index: number) => {
+                        const {layout, component, ...others} = _item;
+                        return (
+                            <Route
+                                key={_index}
+                                path={_item.path}
+                                element={
+                                    <DefaultRoute
+                                        layout={layout || DefaultLayout}
+                                        component={component}
+                                        {...others}
+                                    />
+                                }
+                            />
+                        )
+                    })
+                }
+                <Route path="*" element={<Navigate to="/notfound" replace/>}/>
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
