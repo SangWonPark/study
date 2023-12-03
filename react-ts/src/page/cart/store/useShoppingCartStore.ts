@@ -109,20 +109,17 @@ export const useShoppingCartStore = create<IShoppingCartStoreState & IShoppingCa
                 productList,
                 discounts,
             } = get();
-            let productCount: number = 0;
             let newTotalPrice: number = 0;
             let newDiscountPrice: number = 0;
             let newPaymentPrice: number = 0;
 
             productList.forEach(p => {
-                productCount += p.count
-                newTotalPrice += p.price
+                newTotalPrice += p.price*p.count
             });
             discounts.forEach(d => newDiscountPrice += d.discountPrice);
             newPaymentPrice = newTotalPrice - newDiscountPrice;
 
             set((state) => ({
-                totalProductCount: productCount,
                 totalPrice: newTotalPrice,
                 discountPrice: newDiscountPrice,
                 paymentPrice: newPaymentPrice,

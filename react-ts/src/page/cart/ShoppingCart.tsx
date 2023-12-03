@@ -27,7 +27,7 @@ export function ShoppingCart() {
 
     useEffect(() => {
         refreshPrices();
-    }, [refreshPrices])
+    }, [JSON.stringify(productList)])
 
     const renderProductContents = useMemo(() => {
         if (productList == null || productList.length == 0) {
