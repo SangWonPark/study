@@ -131,3 +131,4 @@ dist
 /.idea/git_toolbox_prj.xml
 /react-ts/package-lock.json
 /package-lock.json
+/react-ts/yarn.lock
