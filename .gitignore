@@ -128,6 +128,10 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+/.idea/git_toolbox_prj.xml
+/react-ts/package-lock.json
+/package-lock.json
+/react-ts/yarn.lock
 
 */package-lock.json
 .idea
