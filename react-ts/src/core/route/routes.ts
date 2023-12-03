@@ -3,6 +3,7 @@ import {SignInLayout} from "../layout/SignInLayout";
 import {SignInContainer} from "../../page/signin/SignInContainer";
 import {DefaultProduct} from "../../page/product/DefaultProduct";
 import {ShoppingMallMain} from "../../page/main/ShoppingMallMain";
+import {ShoppingCart} from "../../page/cart/ShoppingCart";
 
 export type PageRouteProps = {
     title: string;
@@ -32,7 +33,7 @@ export const gnbRoutes: Array<PageRouteProps> = [
     {
         title: '장바구니',
         path: '/cart',
-        component: ShoppingMallMain,
+        component: ShoppingCart,
         exact: false,
     },
     {

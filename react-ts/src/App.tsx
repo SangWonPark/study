@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import './App.css';
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {mergeRoutes, PageRouteProps} from "./core/route/routes";
 import DefaultRoute from "./core/route/DefaultRoute";
 import {DefaultLayout} from "./core/layout/DefaultLayout";
+import {
+    IShoppingCartActions,
+    IShoppingCartStoreState,
+    useShoppingCartStore
+} from "./page/cart/store/useShoppingCartStore";
 
 function App() {
+
     return (
         <BrowserRouter>
             <Routes>

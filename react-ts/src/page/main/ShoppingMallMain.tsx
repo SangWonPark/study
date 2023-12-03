@@ -1,27 +1,20 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect, useMemo} from "react";
 import {Product} from "../product/model/ProductModel";
 import {useNavigate} from "react-router-dom";
+import {useShoppingMallProductStore} from "./store/useShoppingMallProductStore";
 
 export function ShoppingMallMain() {
     const navigator = useNavigate();
-    const products: Array<Product> = [
-        {
-            id: '1',
-            name: '제품 No.1'
-        },
-        {
-            id: '2',
-            name: '제품 No.2'
-        },
-        {
-            id: '3',
-            name: '제품 No.3'
-        },
-        {
-            id: '4',
-            name: '제품 No.4'
+
+    const [products, initProducts] = useShoppingMallProductStore(
+        (state) => [state.products, state.initProducts]
+    );
+
+    useMemo(() => {
+        if (products === null || products.length === 0) {
+            initProducts();
         }
-    ]
+    }, [products, initProducts]);
 
     const goProductPage = useCallback((product: Product) => {
         navigator(`/product/${product.id}`, {
@@ -32,15 +25,28 @@ export function ShoppingMallMain() {
         })
     }, [navigator])
 
-    const renderTableContent = products.map(p => (
-        <tr>
-            <td>{p.id}</td>
-            <td>{p.name}</td>
-            <td>
-                <button type='button' onClick={() => goProductPage(p)}>이동</button>
-            </td>
-        </tr>
-    ));
+    const renderProductContents = useMemo(() => {
+        if (products === null || products.length === 0) {
+            return (
+                <tr>
+                    <td colSpan={3}>
+                        제품이 없습니다.
+                    </td>
+                </tr>
+            )
+        }
+        return products.map(p => {
+            return (
+                <tr>
+                    <td>{p.id}</td>
+                    <td>{p.name}</td>
+                    <td>
+                        <button type='button' onClick={() => goProductPage(p)}>이동</button>
+                    </td>
+                </tr>
+            )
+        })
+    }, [products, goProductPage]);
 
     return (
         <main>
@@ -54,7 +60,7 @@ export function ShoppingMallMain() {
                 </tr>
                 </thead>
                 <tbody>
-                {renderTableContent}
+                {renderProductContents}
                 </tbody>
             </table>
         </main>
